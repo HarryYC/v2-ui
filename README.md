@@ -27,7 +27,7 @@ https://blog.sprov.xyz/v2-ui/
  - 支持自定义 v2ray 配置模板
  - 支持 https 访问面板（需自备域名 + ssl 证书）
  - 更多高级配置项，详见面板
- 
+
 # 安装&升级
 
 ## 用户注意事项（必看）
@@ -40,7 +40,7 @@ v2-ui 与其它所有关于修改 v2ray 配置文件的工具***完全不兼容*
 
 ## 一键安装&升级
 ```
-bash <(curl -Ls https://blog.sprov.xyz/v2-ui.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/HarryYC/v2-ui/dev/install.sh)
 ```
 
 # 面板其它操作
