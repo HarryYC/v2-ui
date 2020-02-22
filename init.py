@@ -62,9 +62,11 @@ def init_bps():
     from base.router import base_bp
     from server.router import server_bp
     from v2ray.router import v2ray_bp
+    from v2ray.router import public_bp
     bps = [
         base_bp,
         v2ray_bp,
+        public_bp,
         server_bp,
     ]
     if not app.debug:
