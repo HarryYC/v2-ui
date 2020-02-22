@@ -15,7 +15,7 @@ public_bp = Blueprint('public_bp', __name__, url_prefix='/public')
 
 __check_interval = config.get_v2_config_check_interval()
 
-@public_bp.route('/', methods=['GET'])
+@public_bp.route('/clients', methods=['GET'])
 def public_clients():
     from init import common_context
     return render_template('v2ray/public_client.html', **common_context)
