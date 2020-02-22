@@ -87,16 +87,16 @@ def is_ajax():
     return request.headers.get('X-Requested-With') == 'XMLHttpRequest'
 
 
-# @app.before_request
-# def before():
-#     from base.models import Msg
-#     if not session_util.is_login():
-#         for bp in need_login_bps:
-#             if request.path.startswith(bp.url_prefix):
-#                 if is_ajax():
-#                     return jsonify(Msg(False, gettext('You has been logout, please refresh this page and login again')))
-#                 else:
-#                     return redirect(url_for('base.index'))
+@app.before_request
+def before():
+    from base.models import Msg
+    if not session_util.is_login():
+        for bp in need_login_bps:
+            if request.path.startswith(bp.url_prefix):
+                if is_ajax():
+                    return jsonify(Msg(False, gettext('You has been logout, please refresh this page and login again')))
+                else:
+                    return redirect(url_for('base.index'))
 
 
 @app.errorhandler(500)
