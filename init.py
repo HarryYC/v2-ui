@@ -39,7 +39,7 @@ def init_db():
     User.__name__.lower()
     Inbound.__name__.lower()
     Setting.__name__.lower()
-    file_util.mkdirs('/etc/v2-ui')
+    file_util.mkdirs('/etc/v2-ui/')
     db.create_all()
 
 
