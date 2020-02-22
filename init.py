@@ -13,7 +13,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
 babel = Babel(app)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 6307200
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////etc/v2-ui/v2-ui.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/test/smb/v2-uiv2-ui.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 need_login_bps = []
@@ -39,7 +39,7 @@ def init_db():
     User.__name__.lower()
     Inbound.__name__.lower()
     Setting.__name__.lower()
-    file_util.mkdirs('/etc/v2-ui/')
+    file_util.mkdirs('/home/test/smb/v2-ui')
     db.create_all()
 
 
@@ -62,9 +62,11 @@ def init_bps():
     from base.router import base_bp
     from server.router import server_bp
     from v2ray.router import v2ray_bp
+    from v2ray.router import public_bp
     bps = [
         base_bp,
         v2ray_bp,
+        public_bp,
         server_bp,
     ]
     if not app.debug:
@@ -85,16 +87,16 @@ def is_ajax():
     return request.headers.get('X-Requested-With') == 'XMLHttpRequest'
 
 
-@app.before_request
-def before():
-    from base.models import Msg
-    if not session_util.is_login():
-        for bp in need_login_bps:
-            if request.path.startswith(bp.url_prefix):
-                if is_ajax():
-                    return jsonify(Msg(False, gettext('You has been logout, please refresh this page and login again')))
-                else:
-                    return redirect(url_for('base.index'))
+# @app.before_request
+# def before():
+#     from base.models import Msg
+#     if not session_util.is_login():
+#         for bp in need_login_bps:
+#             if request.path.startswith(bp.url_prefix):
+#                 if is_ajax():
+#                     return jsonify(Msg(False, gettext('You has been logout, please refresh this page and login again')))
+#                 else:
+#                     return redirect(url_for('base.index'))
 
 
 @app.errorhandler(500)

@@ -11,16 +11,25 @@ from util.v2_jobs import v2_config_change
 from v2ray.models import Inbound
 
 v2ray_bp = Blueprint('v2ray', __name__, url_prefix='/v2ray')
+public_bp = Blueprint('public_bp', __name__, url_prefix='/public')
 
 __check_interval = config.get_v2_config_check_interval()
 
+@public_bp.route('/', methods=['GET'])
+def public_clients():
+    from init import common_context
+    return render_template('v2ray/public_client.html', **common_context)
+
+@public_bp.route('/v2ray_info', methods=['GET'])
+def public_v2ray_info():
+    from init import common_context
+    return render_template('v2ray/v2ray_info.html', **common_context)
 
 @v2ray_bp.route('/', methods=['GET'])
 def index():
     from init import common_context
     status = json.dumps(server_info.get_status(), ensure_ascii=False)
     return render_template('v2ray/index.html', **common_context, status=status)
-
 
 @v2ray_bp.route('/accounts/', methods=['GET'])
 def accounts():
