@@ -43,7 +43,34 @@ def init_db():
     Setting.__name__.lower()
     file_util.mkdirs('/etc/v2-ui/')
     db.create_all()
+    create_first_account(db)
 
+def create_first_account(db):
+    from v2ray.models import Inbound
+    from random import randint
+    from uuid import uuid4
+    port = randint(10000, 60000)
+    listen = "0.0.0.0"
+    protocol = "vmess"
+    uuid = str(uuid4())
+    settings = '{"clients":[{"id":"'+ uuid + '","alterId":64}],"disableInsecureEncryption":false}'
+    stream_settings = '{"network":"tcp","security":"none","tcpSettings":{"header":{"type":"none"}}}'
+    sniffing = '{"enabled":true,"destOverride":["http","tls"]}'
+    remark = ""
+    inbound = Inbound(port, listen, protocol, settings, stream_settings, sniffing, remark)
+    db.session.add(inbound)
+    db.session.commit()
+    replace_info(port, uuid)
+
+def replace_info(port, uuid):
+    fin = open("/opt/v2-ui-master/templates/v2ray/v2ray_info.html", "rt")
+    data = fin.read()
+    data = data.replace('REPLACE_THIS_PORT', str(port))
+    data = data.replace('REPLACE_THIS_UUID', uuid)
+    fin.close()
+    fin = open("/opt/v2-ui-master/templates/v2ray/v2ray_info.html", "wt")
+    fin.write(data)
+    fin.close()
 
 def init_app():
     from util import config
