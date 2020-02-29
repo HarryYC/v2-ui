@@ -65,7 +65,7 @@ def get_key_file():
 
 
 def get_login_title():
-    return __get('login_title', 'Sign in')
+    return __get('login_title', '天梯控制面板')
 
 
 def get_v2_config_path():
@@ -134,7 +134,7 @@ def init_db(update=False):
     add_if_not_exist(Setting('base_path', 'base_path', '', 'text', '', True), update)
     add_if_not_exist(Setting('cert_file', 'cert_file', '', 'text', '', True), update)
     add_if_not_exist(Setting('key_file', 'key_file', '', 'text', '', True), update)
-    add_if_not_exist(Setting('login_title', 'login_title', 'Sign in', 'text', '', False), update)
+    add_if_not_exist(Setting('login_title', 'login_title', '天梯控制面板', 'text', '', False), update)
     add_if_not_exist(Setting('v2_config_path', 'v2_config_path', '/etc/v2ray/config.json', 'text', '', False), update)
     add_if_not_exist(Setting('v2_template_config', 'v2_template_config', __read_v2_template_config(), 'textarea', '', False), update)
     add_if_not_exist(Setting('v2_config_check_interval', 'v2_config_check_interval', '10', 'int', '', True), update)
